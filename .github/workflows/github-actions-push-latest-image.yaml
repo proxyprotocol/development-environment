@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} will push test image
 on:
   push:
     branches:
-      - develop
+      - main
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
@@ -27,11 +27,11 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ env.REGISTRY }}/proxyprotocol/development-environment:test
+          tags: ${{ env.REGISTRY }}/proxyprotocol/development-environment:latest
           labels: |
             "org.opencontainers.image.title=development-environment"
             "org.opencontainers.image.description=Docker image that can be used as an environment for software development."
             "org.opencontainers.image.url=https://github.com/proxyprotocol/development-environment"
             "org.opencontainers.image.source=https://github.com/proxyprotocol/development-environment"
-            "org.opencontainers.image.version=test"
+            "org.opencontainers.image.version=latest"
             "org.opencontainers.image.licenses=MIT"
