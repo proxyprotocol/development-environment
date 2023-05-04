@@ -1,9 +1,9 @@
-name: Push image
+name: Test image deployment pipeline
 run-name: ${{ github.actor }} will push test image
 on:
   push:
     branches:
-      - develop
+      - initial-version
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
