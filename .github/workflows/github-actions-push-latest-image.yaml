@@ -1,5 +1,5 @@
-name: Test image deployment pipeline
-run-name: ${{ github.actor }} will push test image
+name: Latest image deployment pipeline
+run-name: ${{ github.actor }} will push latest image
 on:
   push:
     branches:
