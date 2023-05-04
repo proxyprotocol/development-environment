@@ -22,16 +22,19 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-
       - name: Build and push Docker image
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags:
+            - ${{ env.REGISTRY }}/proxyprotocol/development-environment:latest
+          labels:
+            - "org.opencontainers.image.title=development-environment",
+            - "org.opencontainers.image.description=Docker image that can be used as an environment for software development.",
+            - "org.opencontainers.image.url=https://github.com/proxyprotocol/development-environment",
+            - "org.opencontainers.image.source=https://github.com/proxyprotocol/development-environment",
+            - "org.opencontainers.image.version=nightly",
+            - "org.opencontainers.image.created=2023-05-04T20:41:09.565Z",
+            - "org.opencontainers.image.revision=64d4a6fb542bbeae48773484caede9e875043cee",
+            - "org.opencontainers.image.licenses=MIT"
