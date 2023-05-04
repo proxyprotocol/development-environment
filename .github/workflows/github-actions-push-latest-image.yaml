@@ -1,0 +1,37 @@
+name: Latest image deployment pipeline
+run-name: ${{ github.actor }} will push latest image
+on:
+  push:
+    branches:
+      - main
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+jobs:
+  build-and-push-image:
+    name: "Build and push Docker image"
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+        with:
+          context: .
+          push: true
+          tags: ${{ env.REGISTRY }}/proxyprotocol/development-environment:latest
+          labels: |
+            "org.opencontainers.image.title=development-environment"
+            "org.opencontainers.image.description=Docker image that can be used as an environment for software development."
+            "org.opencontainers.image.url=https://github.com/proxyprotocol/development-environment"
+            "org.opencontainers.image.source=https://github.com/proxyprotocol/development-environment"
+            "org.opencontainers.image.version=latest"
+            "org.opencontainers.image.licenses=MIT"
