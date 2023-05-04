@@ -30,11 +30,11 @@ jobs:
           tags:
             - ${{ env.REGISTRY }}/proxyprotocol/development-environment:latest
           labels:
-            - "org.opencontainers.image.title=development-environment",
-            - "org.opencontainers.image.description=Docker image that can be used as an environment for software development.",
-            - "org.opencontainers.image.url=https://github.com/proxyprotocol/development-environment",
-            - "org.opencontainers.image.source=https://github.com/proxyprotocol/development-environment",
-            - "org.opencontainers.image.version=nightly",
-            - "org.opencontainers.image.created=2023-05-04T20:41:09.565Z",
-            - "org.opencontainers.image.revision=64d4a6fb542bbeae48773484caede9e875043cee",
+            - "org.opencontainers.image.title=development-environment"
+            - "org.opencontainers.image.description=Docker image that can be used as an environment for software development."
+            - "org.opencontainers.image.url=https://github.com/proxyprotocol/development-environment"
+            - "org.opencontainers.image.source=https://github.com/proxyprotocol/development-environment"
+            - "org.opencontainers.image.version=nightly"
+            - "org.opencontainers.image.created=2023-05-04T20:41:09.565Z"
+            - "org.opencontainers.image.revision=64d4a6fb542bbeae48773484caede9e875043cee"
             - "org.opencontainers.image.licenses=MIT"
