@@ -27,7 +27,7 @@ For C++ development, this image contains:
 - LLVM/Clang 16
 - cmake 3.26.3
 - Conan 2.0.4
-- Nina 1.11.1
+- Ninja 1.11.1
 
 ## Python 
 Version: 3.10
