@@ -48,7 +48,10 @@ RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - 2>/dev/
     apt-get update -qq && export DEBIAN_FRONTEND=noninteractive && \
     apt-get install -y --no-install-recommends \
         clang-${LLVM_VER} lldb-${LLVM_VER} lld-${LLVM_VER} clangd-${LLVM_VER} \
-        llvm-${LLVM_VER}-dev libclang-${LLVM_VER}-dev clang-tidy-${LLVM_VER}
+        llvm-${LLVM_VER}-dev libclang-${LLVM_VER}-dev libclang-cpp${LLVM_VER}-dev \ 
+        clang-tidy-${LLVM_VER} clang-tools-${LLVM_VER} llvm-${LLVM_VER}-tools \
+        libc++-${LLVM_VER}-dev libc++abi-${LLVM_VER}-dev libclang-common-${LLVM_VER}-dev
+
 
 # Set installed clangd as default
 RUN update-alternatives --install /usr/bin/clangd clangd $(which clangd-${LLVM_VER}) 1
