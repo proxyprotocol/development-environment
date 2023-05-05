@@ -13,6 +13,9 @@ ARG LLVM_VER="16"
 # cmake version
 ARG CMAKE_VERSION="3.26.3"
 
+# ninja version
+ARG NINJA_VERSION="1.11.1"
+
 # conan version
 ARG CONAN_VER="2.0.4"
 
@@ -25,7 +28,7 @@ RUN apt-get update -qq && export DEBIAN_FRONTEND=noninteractive && \
     apt-get install -y --no-install-recommends \
         software-properties-common wget apt-utils file zip \
         openssh-client gpg-agent socat rsync \
-        make ninja-build git
+        make git unzip
 
 ################################ GCC ##################################################################################
 
@@ -59,13 +62,28 @@ RUN update-alternatives --install /usr/bin/clang++ clang++ $(which clang++-${LLV
 
 ################################ CMAKE ################################################################################
 
-RUN wget https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-linux-x86_64.sh -O /tmp/cmake_installer.sh
-RUN sh /tmp/cmake_installer.sh --prefix=/usr/lib/cmake --skip-license
+RUN mkdir -p /tmp/cmake-${CMAKE_VERSION}
+RUN mkdir -p /usr/lib/cmake-${CMAKE_VERSION}
 
-RUN update-alternatives --install /usr/bin/cmake cmake /usr/lib/cmake/bin/cmake 100
-RUN update-alternatives --install /usr/bin/ctest ctest /usr/lib/cmake/bin/ctest 100
+RUN wget https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-linux-x86_64.sh -O /tmp/cmake-${CMAKE_VERSION}/cmake_installer.sh
+RUN sh /tmp/cmake-${CMAKE_VERSION}/cmake_installer.sh --prefix="/usr/lib/cmake-${CMAKE_VERSION}" --skip-license
 
-RUN rm /tmp/cmake_installer.sh
+RUN update-alternatives --install /usr/bin/cmake cmake /usr/lib/cmake-${CMAKE_VERSION}/bin/cmake 100
+RUN update-alternatives --install /usr/bin/ctest ctest /usr/lib/cmake-${CMAKE_VERSION}/bin/ctest 100
+
+RUN rm -r /tmp/cmake-${CMAKE_VERSION}
+
+################################ Ninja build ##########################################################################
+
+RUN mkdir -p /tmp/ninja-${NINJA_VERSION}
+RUN mkdir -p /usr/lib/ninja-${NINJA_VERSION}/bin
+
+RUN wget https://github.com/ninja-build/ninja/releases/download/v${NINJA_VERSION}/ninja-linux.zip -O /tmp/ninja-${NINJA_VERSION}/ninja-linux.zip
+RUN cd /tmp/ninja-${NINJA_VERSION} && unzip ninja-linux.zip && mv ninja /usr/lib/ninja-${NINJA_VERSION}/bin/ninja
+
+RUN update-alternatives --install /usr/bin/ninja ninja /usr/lib/ninja-${NINJA_VERSION}/bin/ninja 100
+
+RUN rm -r /tmp/ninja-${NINJA_VERSION}
 
 ################################ TOOLS & LIBS #########################################################################
 
