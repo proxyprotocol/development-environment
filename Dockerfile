@@ -54,10 +54,10 @@ RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - 2>/dev/
 
 # fix include symlink
 RUN rm /usr/lib/clang/16/include
-RUN rm /usr/lib/clang/16.0.3/include
+RUN rm /usr/lib/clang/16.0.4/include
 
 RUN ln -s /usr/lib/llvm-16/lib/clang/16/include /usr/lib/clang/16/include
-RUN ln -s /usr/lib/llvm-16/lib/clang/16/include /usr/lib/clang/16.0.3/include
+RUN ln -s /usr/lib/llvm-16/lib/clang/16/include /usr/lib/clang/16.0.4/include
 
 # Set installed clangd as default
 RUN update-alternatives --install /usr/bin/clangd clangd $(which clangd-${LLVM_VER}) 1
